@@ -70,4 +70,22 @@ private:
   const uchar* const end;
 };
 
+// custom writer for compressed data
+class RCcustomencoder : public RCencoder {
+public:
+  RCcustomencoder(void *context, int (*writer)(uint /*byte*/, void */*ctx*/)) : RCencoder(), ctx(context), wrt(writer), count(0) {}
+  void putbyte(uint byte)
+  {
+    if (wrt(byte, ctx) == 0)
+      ++count;
+    else
+      fpzip_errno = fpzipErrorBufferOverflow;
+  }
+  size_t bytes() const { return count; }
+
+private:
+  void *ctx;
+  int (*wrt)(uint /*byte*/, void */*ctx*/);
+  size_t count;
+};
 #endif

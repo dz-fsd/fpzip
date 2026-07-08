@@ -229,6 +229,19 @@ fpzip_write_to_buffer(
   return static_cast<FPZ*>(stream);
 }
 
+// write compressed stream to custom sink
+FPZ*
+fpzip_write_to_custom(
+  int (*writer)(unsigned int /*byte*/, void */*ctx*/), // write function
+  void *context
+)
+{
+  fpzip_errno = fpzipSuccess;
+  FPZoutput* stream = allocate_output();
+  stream->re = new RCcustomencoder(context, writer);
+  return static_cast<FPZ*>(stream);
+}
+
 // close stream for writing and clean up
 void
 fpzip_write_close(

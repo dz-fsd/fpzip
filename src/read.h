@@ -62,4 +62,25 @@ private:
   const uchar* const begin;
 };
 
+class RCcustomsourcedecoder : public RCdecoder {
+public:
+  RCcustomsourcedecoder(void *context, uint (*reader)(void */*ctx*/)) : RCdecoder(), ctx(context), rdr(reader), count(0) {}
+  uint getbyte()
+  {
+    uint byte = rdr(ctx);
+
+    if (byte != EOF)
+      count++;
+
+    return byte;
+  }
+
+  size_t bytes() const { return count; }
+
+private:
+  void *ctx;
+  uint (*rdr)(void */*ctx*/);
+  size_t count;
+};
+
 #endif

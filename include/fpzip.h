@@ -189,6 +189,13 @@ fpzip_read_from_buffer(
   const void* buffer  /* pointer to compressed input data */
 );
 
+/* associate custom source with compressed input stream */
+FPZ*                  /* compressed stream */
+fpzip_read_from_custom(
+  unsigned int (*reader)(void */*context*/), /* reader function */
+  void *context       /* context */
+);
+
 /* read FPZ meta data (use only if previously written) */
 int                   /* nonzero upon success */
 fpzip_read_header(
@@ -219,6 +226,13 @@ FPZ*                  /* compressed stream */
 fpzip_write_to_buffer(
   void*  buffer,      /* pointer to compressed output data */
   size_t size         /* size of allocated storage for buffer */
+);
+
+/* associate custom output with compressed output stream */
+FPZ*                  /* compressed stream */
+fpzip_write_to_custom(
+  int (*writer)(unsigned int /*byte*/, void */*ctx*/), /* write function */
+  void *context       /* context */
 );
 
 /* write FPZ meta data */

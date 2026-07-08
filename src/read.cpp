@@ -230,6 +230,20 @@ fpzip_read_from_buffer(
   return static_cast<FPZ*>(stream);
 }
 
+// read compressed stream from custom source
+FPZ*
+fpzip_read_from_custom(
+  unsigned int (*reader)(void */*context*/),
+  void *context
+)
+{
+  fpzip_errno = fpzipSuccess;
+  FPZinput* stream = allocate_input();
+  stream->rd = new RCcustomsourcedecoder(context, reader);
+  stream->rd->init();
+  return static_cast<FPZ*>(stream);
+}
+
 // close stream for reading and clean up
 void
 fpzip_read_close(
