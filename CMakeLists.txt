@@ -47,7 +47,7 @@ endif()
 # Windows (Visual Studio) specific options
 if(MSVC)
   # Use this to get a usable export library when building a DLL on Windows
-  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+  # set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
   # Silence extraneous Visual Studio specific warnings
   add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS /wd4146 /wd4305)

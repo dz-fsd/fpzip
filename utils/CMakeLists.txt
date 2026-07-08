@@ -6,3 +6,6 @@ target_link_libraries(fpzipcmd fpzip)
 if(HAVE_LIBM_MATH)
   target_link_libraries(fpzipcmd m)
 endif()
+
+install(TARGETS fpzipcmd
+	EXPORT fpzip-targets)

@@ -102,22 +102,28 @@
     /* export symbols */
     #ifdef __cplusplus
       #define extern_ extern "C" __declspec(dllexport)
+      #define export_            __declspec(dllexport)
     #else
       #define extern_ extern     __declspec(dllexport)
+      #define export_            __declspec(dllexport)
     #endif
   #else
     /* import symbols */
     #ifdef __cplusplus
       #define extern_ extern "C" __declspec(dllimport)
+      #define export_            __declspec(dllimport)
     #else
       #define extern_ extern     __declspec(dllimport)
+      #define export_            __declspec(dllimport)
     #endif
   #endif
 #else /* !(_MSC_VER && FPZIP_SHARED_LIBS) */
   #ifdef __cplusplus
     #define extern_ extern "C"
+    #define export_
   #else
     #define extern_ extern
+    #define export_
   #endif
 #endif
 
@@ -178,18 +184,21 @@ extern_ const char* const fpzip_version_string;   /* verbose version string */
 extern_ const unsigned int fpzip_data_model;      /* encoding of data model */
 
 /* associate file with compressed input stream */
+export_
 FPZ*                  /* compressed stream */
 fpzip_read_from_file(
   FILE* file          /* binary input stream */
 );
 
 /* associate memory buffer with compressed input stream */
+export_
 FPZ*                  /* compressed stream */
 fpzip_read_from_buffer(
   const void* buffer  /* pointer to compressed input data */
 );
 
 /* associate custom source with compressed input stream */
+export_
 FPZ*                  /* compressed stream */
 fpzip_read_from_custom(
   unsigned int (*reader)(void */*context*/), /* reader function */
@@ -197,12 +206,14 @@ fpzip_read_from_custom(
 );
 
 /* read FPZ meta data (use only if previously written) */
+export_
 int                   /* nonzero upon success */
 fpzip_read_header(
   FPZ* fpz            /* compressed stream */
 );
 
 /* decompress array */
+export_
 size_t                /* number of compressed bytes read (zero = error) */
 fpzip_read(
   FPZ*  fpz,          /* compressed stream */
@@ -210,18 +221,21 @@ fpzip_read(
 );
 
 /* close input stream and deallocate fpz */
+export_
 void
 fpzip_read_close(
   FPZ* fpz            /* compressed stream */
 );
 
 /* associate file with compressed output stream */
+export_
 FPZ*                  /* compressed stream */
 fpzip_write_to_file(
   FILE* file          /* binary output stream */
 );
 
 /* associate memory buffer with compressed output stream */
+export_
 FPZ*                  /* compressed stream */
 fpzip_write_to_buffer(
   void*  buffer,      /* pointer to compressed output data */
@@ -229,6 +243,7 @@ fpzip_write_to_buffer(
 );
 
 /* associate custom output with compressed output stream */
+export_
 FPZ*                  /* compressed stream */
 fpzip_write_to_custom(
   int (*writer)(unsigned int /*byte*/, void */*ctx*/), /* write function */
@@ -236,12 +251,14 @@ fpzip_write_to_custom(
 );
 
 /* write FPZ meta data */
+export_
 int                   /* nonzero upon success */
 fpzip_write_header(
   FPZ* fpz            /* compressed stream */
 );
 
 /* compress array */
+export_
 size_t                /* number of compressed bytes written (zero = error) */
 fpzip_write(
   FPZ*        fpz,    /* compressed stream */
@@ -249,6 +266,7 @@ fpzip_write(
 );
 
 /* close output stream and deallocate fpz */
+export_
 void
 fpzip_write_close(
   FPZ* fpz            /* compressed stream */
